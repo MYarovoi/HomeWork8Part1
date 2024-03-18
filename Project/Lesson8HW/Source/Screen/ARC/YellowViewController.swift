@@ -15,6 +15,8 @@ class YellowViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setup()
+        
+        printer.delegate = self
     }
     
     func textToPrint() -> String {
@@ -42,8 +44,15 @@ private extension YellowViewController {
     func setup() {
         
         printer = Printer()
-        printer.yellowViewController = self
-        
         printer.startPrinting()
+    }
+}
+
+extension YellowViewController: PrinterProtocol {
+    func textPrint(_ seconds: Int) {
+        
+        let secondsText = "\(seconds) секунд"
+        
+        print("\(textToPrint()) \(secondsText)")
     }
 }

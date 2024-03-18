@@ -13,8 +13,11 @@ class RedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         setup()
+        
+        printer.delegate = self
     }
     
     func textToPrint() -> String {
@@ -42,8 +45,16 @@ private extension RedViewController {
     func setup() {
         
         printer = Printer()
-        printer.redViewController = self
-        
         printer.startPrinting()
+    }
+}
+
+extension RedViewController: PrinterProtocol {
+    
+    func textPrint(_ seconds: Int) {
+        
+        let secondsText = "\(seconds) секунд"
+        
+        print("\(textToPrint()) \(secondsText)")
     }
 }

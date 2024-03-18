@@ -7,14 +7,17 @@
 
 import Foundation
 
+protocol PrinterProtocol: AnyObject {
+    
+    func textPrint (_ seconds: Int)
+}
+
 class Printer {
     
-    weak var yellowViewController: YellowViewController?
-    weak var blueViewController: BlueViewController?
-    weak var redViewController: RedViewController?
     
     private var timer: Timer?
     private var seconds: Int = 0
+    weak var delegate: PrinterProtocol?
     
     func startPrinting() {
         
@@ -34,20 +37,8 @@ class Printer {
     }
     
     @objc private func timerAction() {
-        
-        let secondsText = "\(seconds) секунд"
-        
-        if let textToPrint = yellowViewController?.textToPrint() {
-            print("\(textToPrint) \(secondsText)")
-        }
-        
-        if let textToPrint = blueViewController?.textToPrint() {
-            print("\(textToPrint) \(secondsText)")
-        }
-        
-        if let textToPrint = redViewController?.textToPrint() {
-            print("\(textToPrint) \(secondsText)")
-        }
+                
+        self.delegate?.textPrint(seconds)
         
         seconds += 1
     }

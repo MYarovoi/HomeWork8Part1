@@ -13,8 +13,11 @@ class BlueViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         setup()
+        
+        printer.delegate = self
     }
     
     func textToPrint() -> String {
@@ -42,8 +45,16 @@ private extension BlueViewController {
     func setup() {
         
         printer = Printer()
-        printer.blueViewController = self
-        
         printer.startPrinting()
+    }
+}
+
+extension BlueViewController: PrinterProtocol {
+    
+    func textPrint(_ seconds: Int) {
+        
+        let secondsText = "\(seconds) секунд"
+        
+        print("\(textToPrint()) \(secondsText)")
     }
 }
